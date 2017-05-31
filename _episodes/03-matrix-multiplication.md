@@ -104,27 +104,26 @@ int main(int argc, char **argv) {
    struct timespec ts_start, ts_end;
    int size = 1000;
    int multiplier = 2;
+   int i,j, total;
+   float time_total;
    int a[size][size];
-   # Set the matrix values to 1
    for (i=0; i<size; i++) {
       for (j=0; j<size; j++) {
-         s[i][j] = 1;
+         a[i][j] = 1;
       }
    }
    int c[size];
-   # Initialize to 0
    for (i=0; i<size; i++) {
       c[i] = 0;
    }
-   int i,j, total;
-   float time_total;
    clock_gettime(CLOCK_MONOTONIC, &ts_start);
    #pragma omp parallel for
    for (i = 0; i<size; i++) {
       for (j=0; j<size; j++) {
-         c[i] = c[i] + a[i,j];
+         c[i] = c[i] + a[i][j];
       }
    }
+   total = 0;
    for (i=0; i<size; i++) {
       total = total + c[i];
    }
